@@ -89,6 +89,52 @@ body{
     color: black; 
 }
 
-@media (max-width: 600px) {
+.facts {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px;
+}
 
+.content-image{
+    max-width:20%;
+    height: auto;
+    border-radius:10px;
+    margin:100px
+}
+
+.facts {
+    justify-content: flex-start; 
+    align-items: center;
+    color: white;
+    font-size: 15px; 
+    margin: 0; 
+}
+
+.facts:nth-child(odd) {
+    flex-direction: row; 
+}
+
+
+
+.facts:nth-child(even) {
+    flex-direction: row-reverse; 
+}
+
+p{
+    max-width: 50%;
+    letter-spacing: 5px;
+}
+@media (max-width: 600px) {
+    .fact-item {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .content-image {
+        max-width: 100%; 
+    }
+
+    .fact-text {
+        max-width: 100%; 
+    }
 }
