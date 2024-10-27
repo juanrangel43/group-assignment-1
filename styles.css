@@ -1,0 +1,139 @@
+body{
+    font-family: "Prociono", serif;
+    background-image: url(https://images.unsplash.com/photo-1529753253655-470be9a42781?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+.main-header {
+    background-color: rgba(186, 186, 186, 0); 
+    padding: 10px 0;
+}
+
+.site-title {
+    color:white;
+    letter-spacing: 5px; 
+    text-align: center; 
+}
+
+.navbar{
+    background-color: rgba(186, 186, 186, 0.059);
+    position: sticky; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    top: 0;
+    padding: 20px 50px;
+}
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    gap: 110px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link{
+    text-decoration:none;
+    color:grey;
+    background-color: transparent;
+    padding: 20px 25px;
+    letter-spacing: 5px; 
+    transition: color 0.5s;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.nav-link:hover{
+    color:black;
+    text-shadow: 0 0 10px white;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.search-bar {
+    margin-left: auto;
+}
+
+
+.search-input {
+    padding: 10px 15px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    font-size: 15px;
+    width: 200px;
+    background-color: rgba(186, 186, 186, 0.189); 
+    transition: background-color 0.5s; 
+}
+
+.search-input:hover {
+    background-color: white;
+}
+
+.search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(252, 252, 252);
+    color: rgba(0, 0, 0, 0.957);
+    font-size: 15px;
+    letter-spacing: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.search-button:hover {
+    background-color: white;
+    color: black; 
+}
+
+.facts {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px;
+}
+
+.content-image{
+    max-width:20%;
+    height: auto;
+    border-radius:10px;
+    margin:100px
+}
+
+.facts {
+    justify-content: flex-start; 
+    align-items: center;
+    color: white;
+    font-size: 15px; 
+    margin: 0; 
+}
+
+.facts:nth-child(odd) {
+    flex-direction: row; 
+}
+
+
+
+.facts:nth-child(even) {
+    flex-direction: row-reverse; 
+}
+
+p{
+    max-width: 50%;
+    letter-spacing: 5px;
+}
+@media (max-width: 600px) {
+    .fact-item {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .content-image {
+        max-width: 100%; 
+    }
+
+    .fact-text {
+        max-width: 100%; 
+    }
+}
