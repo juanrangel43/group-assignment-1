@@ -1,5 +1,5 @@
 body{
-    font-family: "Inter", serif;
+    font-family: "Prociono", serif;
 	font-size: 0.875rem;
 	letter-spacing: .050rem;
     background-image: url(https://images.unsplash.com/photo-1529753253655-470be9a42781?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
@@ -9,16 +9,23 @@ body{
 }
 
 .main-header {
-    background-color: rgba(186, 186, 186, 0); 
-    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    background-color: rgba(186, 186, 186, 0);
+    font-size: 25px;
+    letter-spacing: 5px;
 }
 
-.main-header::after {
-	content: url("soccer-ball.png");
+.main-header::before {
+    transform: scale(0.8); 
+	content: url("MUFC_1973_badge.png");
+
 }
 
 .site-title {
-    color:white;
+    color:rgb(0, 0, 0);
+    text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
     text-align: center; 
 }
 
@@ -44,17 +51,17 @@ body{
 }
 
 .nav-link:visited {
-	color: blue;
+	color: darkred;
 }
 
 .nav-link:hover{
     color:black;
-    text-shadow: 0 0 10px white;
+    text-shadow: -.5px 0 red, 0 .5px red, .5px 0 red, 0 -.5px red;
     background-color: rgba(255, 255, 255, 0);
 }
 
 .nav-link:active{
-	color: yellow;
+	color: red;
 }
 
 .search-bar {
@@ -68,16 +75,16 @@ body{
     border-radius: 20px;
     font-size: 15px;
     width: 200px;
-    background-color: rgba(186, 186, 186, 0.189); 
+    background-color: rgba(255, 0, 0, 0.189); 
     transition: background-color 0.5s; 
 }
 
 .search-input:hover {
-    background-color: white;
+    background-color: darkred;
 }
 
 .search-input:focus{
-	background-color: black;
+	background-color: rgba(178, 48, 48, 0.854);
 	color: white;
 }
 
@@ -85,16 +92,18 @@ body{
     padding: 10px 15px;
     border: .25rem solid black;
     border-radius: .5rem;
-    background-color: rgba(252, 252, 252, 0.543);
-    color: rgba(0, 0, 0, 0.957);
+    background-color: rgb(0, 0, 0);
+    color: rgba(255, 255, 255, 0.957);
     font-size: 15px;
+    letter-spacing: 5px;
     cursor: pointer;
     transition: background-color 0.5s;
 }
 
 .search-button:hover {
-    background-color: white;
-    color: black; 
+    font-size: 14.8px;
+    font-weight: bold;
+    color: rgb(228, 97, 97); 
 }
 
 .search-button:focus-visible{
@@ -107,9 +116,9 @@ body{
 }
 
 .content-image{
-    max-width:20%;
+    max-width:30%;
     height: auto;
-	border: 1rem solid white;
+	border: 2px solid white;
 	border-color: white;
     border-radius:10px;
     margin:100px
@@ -131,25 +140,36 @@ body{
     flex-direction: row-reverse; 
 }
 
-p
-{
-    text-indent: 40px;
-    max-width: 50%;
+.fact-text {
+    max-width: 50%; 
 }
 
-p::first-line {
-	font-style: italic;
-	font-size: 2em;
+.names {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 4em;
+    letter-spacing: 5px;
+}
+
+.years {
+    font-size: 15px;
+    display: block; 
+}
+
+.fact-description {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    text-indent: 40px; 
+    margin: 0; 
 }
 
 .footer{
+    font-size: 10px; 
     display:flex;
     justify-content: center;
     padding:10px;
 }
 
 .copyright{
-    font-size: 12px; 
     letter-spacing: 4px;
     color: gray;
     margin: 0;
@@ -157,10 +177,12 @@ p::first-line {
 }
 
 a.github-link{
+    text-decoration: none;
     color:grey;
 }
 
 a.github-link:hover{
+    text-decoration: none; 
     color:lightgrey;
     font-weight: bold;
 
@@ -172,101 +194,97 @@ a.github-link:hover{
 }
 
 @media (max-width: 600px) {
-    body {
-        font-size: 0.625rem;
-		letter-spacing: 0.05rem;
-        overflow-x: hidden;
-    }
-
-    .site-title {
-        font-size: 2rem;
-        margin: 0 10px;
-    }
-
-    .navbar {
-        padding: 10px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center; 
-    }
-
-    .nav-links {
-        gap: 10px;
-        flex-direction: column;
-        width: 100%;
-        justify-content:center;
-        align-items: center;
-    }
-
-    .nav-link {
-        padding: 10px;
-        font-size: 15px;
-        letter-spacing: 2px;
-        text-align: center;
-    }
-
-    .search-bar {
-        margin-top: 10px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .search-input {
-        width: 70%;
-        font-size: 10px;
-    }
-	
-	.search-input.focus
-	{
-		color: white;
-		background-color: black;
-	}
-
-    .search-button {
-        font-size: 12px;
-        padding: 5px 10px;
-        margin-left: auto;
-    }
-	
-	.search-button:focus-visible {
-		box-shadow: 1em 1em 1em gray;
-	}
-
-    .facts {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-
-    .fact-item {
-        flex-direction: column;
-		gap: 1rem;
-    }
-
-    .content-image {
-        max-width: 30%;
-        margin: 10px 0;
-    }
-
-    p {
-        max-width: 90%;
-        font-size: 10px;
-        letter-spacing: .5px;
-        margin: 5px;
-    }
-
-    .footer{
-        flex-direction: column;
-    }
-
-    .copyright{
-        text-align: center;
-        font-size: 9px;
-        letter-spacing: 4px;
-    }
-    .github-link {
-        font-size: 9px;
+    @media (max-width: 600px) {
+        body {
+            font-size: 0.625rem;
+            letter-spacing: 0.05rem;
+            overflow-x: hidden;
+        }
+    
+        .site-title {
+            font-size: 14px;
+            margin: 10px 10px;
+        }
+    
+        .navbar {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+        }
+    
+        .nav-link {
+            padding: 5px;
+            font-size: 15px;
+            letter-spacing: 5px;
+            text-align: center;
+        }
+    
+        .search-bar {
+            margin-top: 2px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .search-input {
+            width: 70%;
+            font-size: 10px;
+        }
+    
+        .search-button {
+            font-size: 12px;
+            padding: 5px 10px;
+            margin-left: auto;
+        }
+    
+        .facts {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+    
+        .content-image {
+            max-width: 50%;
+            border: 2px solid white;
+            border-radius:10px;
+            margin: 10px 10px;
+        }
+    
+        .fact-text {
+            max-width: 90%;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            margin: 5px;
+        }
+    
+        .names {
+            font-size: 20px;
+        }
+    
+        .years {
+            font-size: 10px;
+            display: block; 
+        }
+    
+        .fact-description {
+            text-indent: 10px; 
+            font-size: 10px;
+        }
+    
+        .footer {
+            flex-direction: column;
+        }
+    
+        .copyright {
+            text-align: center;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+    
+        .github-link {
+            font-size: 10px;
+            text-decoration: none;
+        }
     }
 }
