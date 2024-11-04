@@ -64,6 +64,11 @@ body{
 	color: red;
 }
 
+.nav-link::after {
+    content: 'Ϟ';
+    padding-left: 5px;
+}
+
 .search-bar {
     margin-left: auto;
 }
@@ -142,6 +147,18 @@ body{
 
 .fact-text {
     max-width: 50%; 
+}
+
+.names-passed {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 4em;
+    letter-spacing: 5px;
+}
+
+.names-passed::after{
+    content:"🕯";
+    font-size: 15px;
 }
 
 .names {
