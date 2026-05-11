@@ -2,6 +2,7 @@
 -- 1. Delay Propagation (Sean Wang)
 -- ==================================================================================
 
+DELIMITER $$
 CREATE PROCEDURE Delay_Propagation(
     IN incident_id INT,
     IN trip_id INT,
@@ -9,46 +10,39 @@ CREATE PROCEDURE Delay_Propagation(
     IN delay_minutes INT
 )
 BEGIN
-    WITH RECURSIVE Later_Stop_Delays AS (
-        SELECT
-            Stop.stop_id,
-            Stop.trip_id,
-            Stop.sequence_number,
-            delay_minutes AS total_delay
-        FROM Stop
-        WHERE Stop.stop_id = start_stop_id
-          AND Stop.trip_id = trip_id
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE current_stop_id INT;
+    DECLARE cur CURSOR FOR
+        SELECT stop_id FROM Stop
+        WHERE trip_id = trip_id
+          AND sequence_number > (SELECT sequence_number FROM Stop WHERE stop_id = start_stop_id)
+        ORDER BY sequence_number;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
-        UNION ALL
+    OPEN cur;
+    read_loop: LOOP
+        FETCH cur INTO current_stop_id;
+        IF done THEN LEAVE read_loop; END IF;
+        INSERT INTO Delay_Propagation (
+            incident_id,
+            trip_id,
+            stop_id,
+            delay_minutes,
+            calculated_timestamp,
+            impact_scope
+        ) VALUES (
+            incident_id,
+            trip_id,
+            current_stop_id,
+            delay_minutes,       -- same delay for all downstream stops
+            NOW(),
+            'Later Stops'
+        );
+    END LOOP;
+    CLOSE cur;
+END$$
+DELIMITER ;
 
-        SELECT
-            Stop.stop_id,
-            Stop.trip_id,
-            Stop.sequence_number,
-            Later_Stop_Delays.total_delay + delay_minutes
-        FROM Stop
-        JOIN Later_Stop_Delays
-            ON Stop.trip_id = Later_Stop_Delays.trip_id
-           AND Stop.sequence_number = Later_Stop_Delays.sequence_number + 1
-    )
-    INSERT INTO Delay_Propagation (
-        incident_id,
-        trip_id,
-        stop_id,
-        delay_minutes,
-        calculated_timestamp,
-        impact_scope
-    )
-    SELECT
-        incident_id,
-        trip_id,
-        Later_Stop_Delays.stop_id,
-        Later_Stop_Delays.total_delay,
-        NOW(),
-        'Later Stops'
-    FROM Later_Stop_Delays
-    WHERE Later_Stop_Delays.stop_id != start_stop_id;
-END
 
 -- ==================================================================================
 -- 2. Trip Status Change When Delay Exceeds Threshold (Sean Wang)

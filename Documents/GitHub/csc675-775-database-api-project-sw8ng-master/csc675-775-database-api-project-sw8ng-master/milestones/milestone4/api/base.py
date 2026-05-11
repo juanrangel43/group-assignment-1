@@ -54,10 +54,10 @@ class Base:
         pk = self.primary_key()
 
         if pk in self.__dict__ and self.__dict__[pk] is not None:
-            print("I am updating...")
+            # print("I am updating...")
             self._update()
         else:
-            print("I am inserting")
+            # print("I am inserting")
             self._insert()
 
 
@@ -70,7 +70,7 @@ class Base:
         columns = self.columns()
         attributes = [attr for attr, column in columns.items() if not column.is_primary_key()]
         fields = ", ".join(attributes)
-        values = [self.__dict__[attr] for attr in attributes]
+        values = [self.__dict__.get(attr) for attr in attributes]
         placeholders = ", ".join(["%s"] * len(attributes))
 
         # INSERT INTO User (username, email) VALUES (%s, %s)
@@ -115,7 +115,7 @@ class Base:
         fields_separated_by_comma = ", ".join(fields)
 
         query = f"UPDATE {table} SET {fields_separated_by_comma} WHERE {pk} = %s"
-        print(query)
+        # print(query)
         connection, cursor = MySQL.instance()
 
         try:
@@ -305,8 +305,39 @@ class Base:
         table = cls.table_descriptor()
         columns = cls.columns()
         col_defs = []
+        pk_columns = []
         for name, col in columns.items():
-            col_defs.append(f"{name} {col.to_sql()}")
+            # Ensure the column's type is an instance (not a class)
+            col.validate_type()
+            col_sql = f"{name} {col.type.to_sql()}"
+            constraints = []
+            if not col.nullable:
+                constraints.append("NOT NULL")
+            if col.unique:
+                constraints.append("UNIQUE")
+            if col.auto_increment:
+                constraints.append("AUTO_INCREMENT")
+            if col.default is not None:
+                if isinstance(col.default, str):
+                    constraints.append(f"DEFAULT '{col.default}'")
+                else:
+                    constraints.append(f"DEFAULT {col.default}")
+            if col.foreign_key:
+                fk = f"REFERENCES {col.foreign_key}"
+                if col.on_update:
+                    fk += f" ON UPDATE {col.on_update}"
+                if col.on_delete:
+                    fk += f" ON DELETE {col.on_delete}"
+                constraints.append(fk)
+            if col.primary_key:
+                pk_columns.append(name)   # collect for table-level PK
+            # Do NOT add PRIMARY KEY here (will add as separate constraint)
+            if constraints:
+                col_sql += " " + " ".join(constraints)
+            col_defs.append(col_sql)
+        # Add table-level primary key if any columns are primary keys
+        if pk_columns:
+            col_defs.append(f"PRIMARY KEY ({', '.join(pk_columns)})")
         create_sql = f"CREATE TABLE IF NOT EXISTS {table} (\n  " + ",\n  ".join(col_defs) + "\n)"
         connection, cursor = MySQL.instance()
         try:

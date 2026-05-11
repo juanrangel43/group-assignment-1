@@ -36,7 +36,7 @@
 #   The ORM will use these `Column` instances to define the table schema and generate the
 #   corresponding SQL for table creation, validation, and foreign key enforcement.
 
-from api.datatypes import Integer, String, Float, Boolean, Date, Blob
+from api.datatypes import Integer, String, Float, Boolean, Date, Blob, DateTime, Timestamp, Decimal
 
 class Column:
     def __init__(
@@ -75,7 +75,7 @@ class Column:
         Converts bare class references (e.g. Integer) into instances
         (Integer()) so that .to_sql() can always be called on self.type.
         """
-        allowed_types = (Integer, String, Float, Boolean, Date, Blob)
+        allowed_types = (Integer, String, Float, Boolean, Date, Blob, DateTime, Timestamp, Decimal)
  
         # Already an instance — nothing to do
         if isinstance(self.type, allowed_types):
